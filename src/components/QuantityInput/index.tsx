@@ -1,4 +1,4 @@
-import { Minus, Plus } from "phosphor-react"
+ import { Minus, Plus } from "phosphor-react"
 import { useState } from "react"
 import { IconWrapper, QuantityInputContainer } from "./styles"
 
