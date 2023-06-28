@@ -2,12 +2,14 @@
 import { useState } from "react"
 import { IconWrapper, QuantityInputContainer } from "./styles"
 
-const QuantityInput = () => {
-    const [valueCoffee, setValueCoffee] = useState(0)
+interface QuantityInputProps {
+    size?: 'medium' | 'small'
+}
 
-    
+const QuantityInput = ({size = 'medium'}: QuantityInputProps) => {
+    const [valueCoffee, setValueCoffee] = useState(0)    
     return (
-        <QuantityInputContainer>
+        <QuantityInputContainer size={size}>
             <IconWrapper>
                 <Minus weight="fill" size={14} onClick={() => {
                     if (valueCoffee >= 1) {
