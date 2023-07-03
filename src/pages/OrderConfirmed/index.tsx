@@ -4,9 +4,28 @@ import orderConfirmedImage from '../../assets/Illustration.svg'
 import InfoWithIcon from '../../components/InfoWithIcon';
 import { Clock, CurrencyDollar, MapPin } from 'phosphor-react';
 import { useTheme } from 'styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { OrderData } from '../CompleteOrder';
+import { paymentMethods } from '../CompleteOrder/components/CompleteOrderForm/PaymentMethodsOptions';
+import { useEffect } from 'react';
+
+interface LocationType {
+  state: OrderData
+}
 
 export function OrderConfirmedPage() {
   const { colors } = useTheme()
+  const navigate = useNavigate()
+
+  const { state } = useLocation() as unknown as LocationType
+
+  useEffect(() => {
+    if (!state) {
+      navigate('/')
+    }
+  }, [state])
+
+  if (!state) return <></>
 
   return (
     <OrderConfirmedContainer className='container'>
@@ -27,8 +46,8 @@ export function OrderConfirmedPage() {
             iconBg={colors["brand-purple"]}
             text={
               <RegularText>
-                Entrega em <strong>Rua José do Vale, 330</strong> <br />
-                Pajuçara - Maracanaú, CE
+                Entrega em <strong>{state.street}, {state.number} - {state?.complement}</strong> <br />
+                {state.district} - {state.city}, {state.uf}
               </RegularText>
             } />
           <InfoWithIcon
@@ -48,7 +67,7 @@ export function OrderConfirmedPage() {
             text={
               <RegularText>
                 Pagamento na entrega  <br />
-                <strong>Cartão de crédito</strong>
+                <strong>{paymentMethods[state.paymentMethod].label}</strong>
               </RegularText>
             } />
         </OrderDetialsConteiner>
